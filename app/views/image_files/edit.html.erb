@@ -6,3 +6,43 @@
 
 <%= link_to 'Show', @image_file %> |
 <%= link_to 'Back', image_files_path %>
+
+<script>
+
+$(document).ready(function(){
+
+	var left, right, top, bottom;
+	var $img = $('img');
+
+	// Offset
+	var offset = $img.offset();
+
+	$img.on('mousedown', function(event){
+
+		event.preventDefault();
+
+		left = event.pageX;
+		top = event.pageY;
+		
+		$(this).on('mouseup', function(event){
+			right = event.pageX;
+			bottom = event.pageY;
+		
+			// Set end result
+			var newTop = Math.ceil(top - offset.top);
+			var newLeft = Math.ceil(left - offset.left);
+			var width = Math.ceil(right - left);
+			var height = Math.ceil(bottom - top);
+
+
+			$('#image_file_width_offset').val(newLeft);
+			$('#image_file_height_offset').val(newTop);
+			$('#image_file_width').val(width);
+			$('#image_file_height').val(height);
+		});
+	});
+
+
+});
+
+</script>

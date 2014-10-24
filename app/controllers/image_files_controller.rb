@@ -66,6 +66,7 @@ class ImageFilesController < ApplicationController
   # DELETE /image_files/1
   # DELETE /image_files/1.json
   def destroy
+    File.unlink('public/images/'+@image_file.name)
     @image_file.destroy
     respond_to do |format|
       format.html { redirect_to image_files_url, notice: 'Image file was successfully destroyed.' }
