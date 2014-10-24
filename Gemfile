@@ -31,6 +31,7 @@ gem 'spring',        group: :development
 
 gem "mini_magick", "~> 4.0.0.rc"
 
+gem 'bootstrap-generators', '~> 3.2.0'
 # Use unicorn as the app server
 # gem 'unicorn'
 
