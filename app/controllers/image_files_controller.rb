@@ -19,12 +19,20 @@ class ImageFilesController < ApplicationController
 
   # GET /image_files/1/edit
   def edit
+
   end
 
   # POST /image_files
   # POST /image_files.json
   def create
     @image_file = ImageFile.new(image_file_params)
+
+    image = MiniMagick::Image.open(image_file_params[:png_file].tempfile.path)  
+
+    @image_file.height = image["height"]
+    @image_file.width = image["width"]
+    @image_file.name = @image_file.name+'.png'
+    image.write "public/images/#{@image_file.name}"
 
     respond_to do |format|
       if @image_file.save
@@ -40,8 +48,12 @@ class ImageFilesController < ApplicationController
   # PATCH/PUT /image_files/1
   # PATCH/PUT /image_files/1.json
   def update
+
     respond_to do |format|
       if @image_file.update(image_file_params)
+        image = MiniMagick::Image.open('public/images/'+@image_file.name) 
+        image.crop "#{@image_file.width}x#{@image_file.height}+#{@image_file.width_offset}+#{@image_file.height_offset}!"
+        image.write "public/images/#{@image_file.name}"
         format.html { redirect_to @image_file, notice: 'Image file was successfully updated.' }
         format.json { render :show, status: :ok, location: @image_file }
       else
@@ -69,6 +81,6 @@ class ImageFilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_file_params
-      params.require(:image_file).permit(:name, :height, :width)
+      params.require(:image_file).permit(:name, :height, :width, :png_file, :height_offset, :width_offset)
     end
 end

@@ -7,5 +7,6 @@ class CreateImageFiles < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :image_files, :name, unique: true
   end
 end

@@ -11,19 +11,41 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :height %><br>
-    <%= f.text_field :height %>
-  </div>
-  <div class="field">
-    <%= f.label :width %><br>
-    <%= f.text_field :width %>
-  </div>
+  <% unless @image_file.id.present? %>
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
+    <br>
+
+    <div class="field">
+      <%= f.label :png_file %>
+      <%= f.file_field :png_file %>
+    </div>
+    <br>
+  <% end %>
+  
+  <% if @image_file.id.present? %>
+    <div class="field">
+      <%= f.label :height %><br>
+      <%= f.text_field :height %>
+    </div>
+    <div class="field">
+      <%= f.label :width %><br>
+      <%= f.text_field :width %>
+    </div>
+    <div class="field">
+      <%= f.label :width_offset %><br>
+      <%= f.text_field :width_offset %>
+    </div>
+    <div class="field">
+      <%= f.label :height_offset %><br>
+      <%= f.text_field :height_offset %>
+    </div>
+  <% end %>
+
   <div class="actions">
     <%= f.submit %>
   </div>
+
 <% end %>
